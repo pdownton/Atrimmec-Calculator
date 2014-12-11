@@ -1,0 +1,361 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Atrimmec Calculator</title>
+<link href="jquery-mobile/jquery.mobile.theme-1.0.min.css" rel="stylesheet" type="text/css" />
+<link href="jquery-mobile/jquery.mobile.structure-1.0.min.css" rel="stylesheet" type="text/css" />
+<meta name ="viewport" content="width=device-width, intial-scale=1.0" />
+<style type="text/css">
+
+@viewport {
+	width: auto; 
+	max-width: auto;
+	min-width: auto;
+	zoom: auto; 
+
+	max-zoom: 5; 
+	min-zoom: 0.25;
+	user-zoom: zoom; 
+	orientation: auto; 
+
+}
+
+
+
+
+
+
+.CopyStyle4 {				font-family:Verdana, Geneva, sans-serif;
+				font-size:12px;
+}
+.CopyStyle3 {				font-family:Verdana, Geneva, sans-serif;
+				font-size:14px;
+				font-weight:600;
+}
+.CopyStyle5 {				font-family:Verdana, Geneva, sans-serif;
+				font-size:12px;
+				font-weight:600;
+}
+
+
+input {
+    text-align:center;
+}
+
+.CopyStyle6 {				font-family:Verdana, Geneva, sans-serif;
+				font-size:10px;
+				font-weight:600;
+				font-style:oblique;
+}
+
+.CopyStyle7 {				font-family:Verdana, Geneva, sans-serif;
+				font-size:20px;
+				font-weight:600;
+				
+}
+
+
+				
+
+
+.CopyStyle8 {				font-family:Verdana, Geneva, sans-serif;
+				font-size:18px;
+				font-weight:600;
+				color:#fff;
+				
+				
+}
+
+#savings {
+	background-color:#C00;
+	border-radius:5px;
+	
+	}
+
+
+
+.CopyStyle11 {font-family:Verdana, Geneva, sans-serif;
+				font-size:14px;
+				font-weight:600;
+				color:#FFF;
+}
+</style>
+
+<script>
+// JavaScript Document
+
+function atrimmec() {
+
+var jobHours = document.getElementById('jobHours').value;
+var disposalTrips = document.getElementById('disposalTrips').value;
+var milesToSite = document.getElementById('milesToSite').value;
+var pricePerGallon = document.getElementById('pricePerGallon').value;
+
+var travelHours = document.getElementById('travelHours').value;
+var pricePerDisposal = document.getElementById('pricePerDisposal').value;
+var employeeRate = document.getElementById('employeeRate').value;
+var atrimmecPerGallon = document.getElementById('atrimmecPerGallon').value;
+
+var additionalCost = document.getElementById('additionalCost').value;
+
+// First half of the calculator
+
+// Cost to Maintain Hedge for 12 Weeks
+
+
+//Labor Cost
+var laborCost = employeeRate * travelHours + jobHours * employeeRate;
+var laborCostB = laborCost.toFixed(2);
+var employeeCost = (laborCostB*1) * .30;
+var employeeCostB = employeeCost.toFixed(2);
+var totalLaborCost = (laborCostB*1) + (employeeCostB*1);
+var totalLaborCostB = totalLaborCost.toFixed(2);
+
+//divs to display content
+document.getElementById("jxh").innerHTML=laborCostB;
+document.getElementById("burden").innerHTML=employeeCostB;
+document.getElementById("tlc").innerHTML=totalLaborCostB;
+
+//Equipment Cost
+var fixedCost = jobHours * .50;
+var fixedCostB = fixedCost.toFixed(2);
+var operatingCost = jobHours * .125 * pricePerGallon;
+var operatingCostB = operatingCost.toFixed(2);
+var maintenanceCost = employeeRate * .25;
+var maintenanceCostB = maintenanceCost.toFixed(2);
+var totalEquipmentCost = (fixedCostB*1) + (operatingCostB*1) + (maintenanceCostB*1);
+var totalEquipmentCostB = totalEquipmentCost.toFixed(2);
+
+
+
+//divs to display content
+document.getElementById("fc").innerHTML=fixedCostB;
+document.getElementById("oc").innerHTML=operatingCostB;
+document.getElementById("mc").innerHTML=maintenanceCostB;
+document.getElementById("tec").innerHTML=totalEquipmentCostB;
+
+//Transportation Cost
+var transportationCost = milesToSite * .51;
+var transportationCostB = transportationCost.toFixed(2);
+document.getElementById("tc").innerHTML=transportationCostB;
+
+//Disposl Cost
+var disposalCost = disposalTrips * pricePerDisposal;
+var disposalCostB = disposalCost.toFixed(2);
+document.getElementById("dc").innerHTML=disposalCostB;
+
+//Additional Cost
+
+
+//One Trip Cost
+var oneTripCost = (totalLaborCost + (totalEquipmentCostB*1))  + (transportationCostB*1) + (disposalCostB*1);
+var oneTripCostB = (oneTripCost*1) + (additionalCost*1);
+var oneTripCostC = oneTripCostB.toFixed(2);
+document.getElementById("otc").innerHTML=oneTripCostC;
+
+//Cost to Maintain hedge for 12 weeks
+var hedgeCost = oneTripCostC * 3;
+var hedgeCostB = hedgeCost.toFixed(2);
+document.getElementById("thc").innerHTML=hedgeCostB;
+
+// Second half of the calculator
+
+// Cost to Maintain Hedge Sprayed with Atrimmec
+
+//One Trip Cost
+var oneTripCosts = (oneTripCost*1) + (additionalCost*1);
+var oneTripCostsB = oneTripCosts.toFixed(2);
+document.getElementById("otcs").innerHTML=oneTripCostsB;
+
+//Atrimmec Labor Cost
+var atrimmecLaborCost = ((jobHours * employeeRate) + (jobHours * employeeRate) *.30) *.50;
+var atrimmecLaborCostB = atrimmecLaborCost.toFixed(2);
+document.getElementById("alc").innerHTML=atrimmecLaborCostB;
+
+//Atrimmec Cost
+var atrimmecCost = (atrimmecPerGallon / 128 )* 2;
+var atrimmecCostB = atrimmecCost.toFixed(2);
+document.getElementById("ac").innerHTML=atrimmecCostB;
+
+//Atrimmec Equipment Cost
+var atrimmecEquipmentCost = jobHours * .30;
+var atrimmecEquipmentCostB = atrimmecEquipmentCost.toFixed(2);
+document.getElementById("aec").innerHTML=atrimmecEquipmentCostB;
+
+//Atrimmec Total Cost
+var atrimmecTotalCost = ((oneTripCostsB *1) + (atrimmecLaborCostB*1)) + ((atrimmecCostB*1) + (atrimmecEquipmentCostB*1));
+var atrimmecTotalCostB = atrimmecTotalCost.toFixed(2);
+document.getElementById("atc").innerHTML=atrimmecTotalCostB;
+
+//Total Savings
+var totalSavings = hedgeCost - atrimmecTotalCost;
+var totalSavingsB = totalSavings.toFixed(2);
+document.getElementById("savings").innerHTML=totalSavingsB;
+
+
+}
+
+
+</script>
+
+
+
+
+<script src="jquery-mobile/jquery-1.6.4.min.js" type="text/javascript"></script>
+<script src="jquery-mobile/jquery.mobile-1.0.min.js" type="text/javascript"></script>
+</head>
+
+<body>
+<div data-role="page" id="page">
+  <div data-role="header">
+    <h1><img src="Atrimmec-Logo.png" width="136" height="35" /><span class="CopyStyle11"><br />
+    Trimming Cost Calculator</span></h1>
+  </div>
+  <div data-role="content" align="center">
+    <p class="CopyStyle7">Provide estimates below and we’ll help <br />
+      you figure your costs and savings with <br />
+    Atrimmec Plant Growth Regulator</p>
+    <p class="CopyStyle4">(To trim one privet hedge 5 feet tall and 100 feet long)</p>
+    <p><span class="CopyStyle4">Number of on-the-job hours:</span>
+      <input name="jobHours" type="text" id="jobHours" size="8" /> 
+      <br />
+      <span class="CopyStyle4">Number of clean-up, hauling and traveling hours:</span> 
+      <input name="travelHours" type="text" id="travelHours" size="8" />
+      <br />
+      <span class="CopyStyle4">Number of trips to disposal site:</span> 
+      <input name="disposalTrips" type="text" id="disposalTrips" size="8" /> 
+      <br />
+      <span class="CopyStyle4">Price per disposal</span> 
+    <input name="pricePerDisposal" type="text" id="pricePerDisposal" size="8" />
+    </p>
+    <p><span class="CopyStyle4">Number of miles to and from job &amp; disposal sites:</span> 
+      <input name="milesToSite" type="text" id="milesToSite" size="8" />
+      <br /> 
+    <span class="CopyStyle4">Employee’s hourly pay rate:</span> 
+    <input name="employeeRate" type="text" id="employeeRate" size="8" />
+    <br />
+    <span class="CopyStyle4">Price for a gallon of gasoline:</span> 
+      <input name="pricePerGallon" type="text" id="pricePerGallon" size="8" /> 
+      <br />
+      <span class="CopyStyle4">Price for a gallon of Atrimmec (enter MSRP price $394 here):</span> 
+      <input name="atrimmecPerGallon" type="text" id="atrimmecPerGallon" size="8" value="394" />
+    </p>
+    <p><img src="calculate_btn.gif" alt="" width="106" height="30" onclick="atrimmec()" /> </p>
+    <p><span class="CopyStyle3">Cost to Maintain Hedge for 12 Weeks</span>    </p>
+    <p class="CopyStyle4">
+      
+      <span class="CopyStyle5">Labor Costs<br />
+  </span>Job time, clean-up, hauling and travel time x hourly rate:</p>
+    <div id="jxh">$</div>
+    <span class="CopyStyle4">Labor burden (employer costs of social security, worker’s comp, etc.) x 30% of wages:</span>
+    <div id="burden">$</div>
+    <span class="CopyStyle7">
+    </p>
+    TOTAL LABOR COSTS:</span>
+<div id="tlc">$</div></p>
+         
+        <span class="CopyStyle4"> 
+         <span class="CopyStyle5">Equipment Cost<br />
+  </span>Fixed cost – power hedge trimmer, estimating a $500 purchase price, spread over 2 years, operating 500 hours per year making a depreciation cost of $0.50 per hour:</span>
+        <div id="fc">$</div> 
+    
+    
+           <span class="CopyStyle4"> 
+         <span class="CopyStyle5">Operating cost – estimating 1/8 gallon of fuel consumed per hour:<br />
+  </span></span>
+        <div id="oc">$</div>  
+    
+            
+         <span class="CopyStyle5">Maintenance costs<br />
+         </span><span class="CopyStyle4">labor to change oil, sharpen blades, etc. is hourly rate x ¼:<br />
+  </span>
+        <div id="mc">$</div>
+    <span class="CopyStyle7">
+    </p>
+    TOTAL EQUIPMENT COSTS:</span><span class="CopyStyle4"><span class="CopyStyle5"><br />
+    </span></span>
+        <div id="tec">$</div>       
+              
+    
+                  
+         <span class="CopyStyle5">Transportation Cost<br /></span>
+<span class="CopyStyle4">Vehicle expense to transport equipment and personnel to and from job site. Cost per mile of $0.55.:<br />
+  </span>
+        <div id="tc">$</div>       
+               
+    
+                     <span class="CopyStyle4"> 
+         <span class="CopyStyle5">Indirect/Additional Costs<br />
+         Disposal cost<br />
+  </span></span>
+        <div id="dc">$</div>
+        
+                             <span class="CopyStyle4"> 
+         <span class="CopyStyle5">Parts, supplies, blade replacements, storage, taxes, insurance, etc. <br />
+(Add your own additional costs):<br />
+  </span></span>
+        <div>
+          <p>
+            <input name="additionalCost" type="text" id="additionalCost" size="8" />
+          </p>
+          <p><img src="calculate_btn.gif" alt="" width="106" height="30" onclick="atrimmec()" /></p>
+        </div>
+    <span class="CopyStyle7">ONE TRIP TOTAL: </span><span class="CopyStyle4"><span class="CopyStyle5"><br />
+  </span></span>
+        <div id="otc">$</div>  
+    
+                     <p class="CopyStyle4"> 
+                       <span class="CopyStyle7">TOTAL COST: </span><span class="CopyStyle5"><br />
+                     </span>One trip total x three trips: <br />
+                     (cost to maintain hedge for 12 weeks) </p>
+        <div id="thc">$</div>
+    
+                        <p class="CopyStyle4"> 
+                       <span class="CopyStyle5">Cost to Maintain Hedge Sprayed with Atrimmec </p>
+                       
+                       
+                 <p class="CopyStyle4"> 
+                       <span class="CopyStyle5">Initial Trimming Cost<br />
+                     </span>Initial trimming to desired shape and size. (One spraying of Atrimmec will hold growth within 2” of trimming height for 12 weeks or longer, depending on growing conditions).</p>
+        <div id="otcs">$</div>                       
+                       
+                    <p class="CopyStyle4"> 
+                       <span class="CopyStyle5">Labor Cost<br />
+                     </span>Spray application time – landscapers surveyed indicated that spraying required less than half as much time as trimming</p>
+        <div id="alc">$</div>                     
+  
+  
+                     <p class="CopyStyle4"><span class="CopyStyle5">Atrimmec Cost</span><br />
+2 ounces of spray used (per label rate):</p>
+        <div id="ac">$</div>  
+        
+          
+                       <p class="CopyStyle4"><span class="CopyStyle5">Equipment Cost</span><br />
+Backpack sprayer, estimating a $300 purchase price, spread over 2 years operating 500 hours per year making a depreciation cost of $0.30 per hour:</p>
+        <div id="aec">$</div> 
+        
+        
+                          <p class="CopyStyle7">TOTAL COST: </p>
+        <div id="atc">$</div>
+        
+        
+                              <p class="CopyStyle5">TOTAL SAVINGS BY SPRAYING WITH ATRIMMEC:<br />
+                              (To trim one privet  hedge 5 feet tall and 100 feet long)                              </p>
+        <div class="CopyStyle8" id="savings">$</div>      
+                  
+        
+    
+  </div>
+  <div data-role="footer">
+    <h4>Always Read and Follow Label Directions<br />
+*Savings calculated are  estimates only: <br />
+individual results will vary.</h4>
+    <h4>Atrimmec<sup>&reg;</sup> is a registered<br />
+trademark of PBI-Gordon Corp.</h4>
+    <h4><img src="PBIGordonEOC-Logo-White.png" width="130" height="40" /> <img src="Gordon's-Professional-Logo.png" width="130" height="44" /></h4>
+  </div>
+</div>
+</body>
+
+</html>
